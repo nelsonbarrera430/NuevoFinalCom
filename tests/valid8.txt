@@ -1,0 +1,9 @@
+escena inicio {
+    decir "Ruta turística";
+    opcion "Mirador" ir_a mirador;
+}
+
+escena mirador {
+    decir "Mirador panorámico";
+    opcion "Regresar" ir_a inicio;
+}

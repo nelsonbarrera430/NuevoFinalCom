@@ -1,0 +1,9 @@
+escena inicio {
+    decir "Explorando la ciudad";
+    opcion "Ir a mercado" ir_a mercado;
+}
+
+escena mercado {
+    decir "Mercado artesanal";
+    opcion "Volver" ir_a inicio;
+}

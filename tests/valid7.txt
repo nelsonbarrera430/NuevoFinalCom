@@ -1,0 +1,9 @@
+escena inicio {
+    decir "Bienvenido al centro histórico";
+    opcion "Entrar museo" ir_a museo;
+}
+
+escena museo {
+    decir "Historia y arte";
+    opcion "Salir" ir_a inicio;
+}

@@ -1,0 +1,13 @@
+escena inicio {
+    decir "Visitando la plaza";
+    opcion "Continuar" ir_a plaza;
+}
+
+escena plaza {
+    decir "Plaza principal";
+    opcion "Fin" ir_a fin;
+}
+
+escena fin {
+    decir "Tour finalizado";
+}

@@ -1,0 +1,9 @@
+escena inicio {
+    decir "Hola viajero";
+    opcion "Ir al parque" ir_a parque;
+}
+
+escena parque {
+    decir "Bienvenido al parque central";
+    opcion "Ir al inicio" ir_a inicio;
+}

@@ -1,0 +1,9 @@
+escena inicio {
+    decir "Inicio del recorrido";
+    opcion "Ir al rio" ir_a rio;
+}
+
+escena rio {
+    decir "Vista al río";
+    opcion "Volver" ir_a inicio;
+}

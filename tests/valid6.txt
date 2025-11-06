@@ -1,0 +1,9 @@
+escena inicio {
+    decir "Turismo gastronómico";
+    opcion "Ir taqueria" ir_a taqueria;
+}
+
+escena taqueria {
+    decir "Taquería tradicional";
+    opcion "Volver" ir_a inicio;
+}

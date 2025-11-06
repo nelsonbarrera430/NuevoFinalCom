@@ -1,0 +1,9 @@
+escena inicio {
+    decir "Visita guiada";
+    opcion "Restaurante" ir_a restaurante;
+}
+
+escena restaurante {
+    decir "Comida típica";
+    opcion "Volver" ir_a inicio;
+}

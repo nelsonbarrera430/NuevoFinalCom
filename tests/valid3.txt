@@ -1,0 +1,9 @@
+escena inicio {
+    decir "Comienza el tour";
+    opcion "Ir al cafe" ir_a cafe;
+}
+
+escena cafe {
+    decir "Estás en la cafetería";
+    opcion "Volver" ir_a inicio;
+}

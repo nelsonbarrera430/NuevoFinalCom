@@ -1,0 +1,9 @@
+escena inicio {
+    decir "Bienvenido al tour";
+    opcion "Ir al museo" ir_a museo;
+}
+
+escena museo {
+    decir "Estás en el museo";
+    opcion "Volver al inicio" ir_a inicio;
+}

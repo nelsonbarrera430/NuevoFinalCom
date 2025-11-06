@@ -1,0 +1,8 @@
+escena inicio {
+    decir "Hola"
+    opcion "Ir" ir_a parque;
+}
+
+escena parque {
+    decir "Parque";
+}
