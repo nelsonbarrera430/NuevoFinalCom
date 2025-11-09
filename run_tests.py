@@ -1,48 +1,33 @@
-import os
-import subprocess
+# run_tests.py
+import subprocess, os, sys, shutil
 
-TEST_DIR = "tests"
+tests_dir = os.path.join(os.path.dirname(__file__), "tests")
+if not os.path.isdir(tests_dir):
+    print("No hay carpeta tests/")
+    sys.exit(1)
 
-valid_passed = 0
-valid_total = 0
-invalid_passed = 0
-invalid_total = 0
+tests = sorted(os.listdir(tests_dir))
+results = []
 
-for filename in os.listdir(TEST_DIR):
-    if not filename.endswith(".txt"):
+for t in tests:
+    if not t.endswith(".txt"):
         continue
+    path = os.path.join(tests_dir, t)
+    print("----", t, "----")
+    # borrar output_program.py previo
+    if os.path.exists("output_program.py"):
+        os.remove("output_program.py")
 
-    path = os.path.join(TEST_DIR, filename)
+    proc = subprocess.Popen([sys.executable, "main.py", path], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    out, _ = proc.communicate(timeout=10)
+    print(out)
+    success = os.path.exists("output_program.py")
+    # heurística: si test filename contiene 'valid' esperamos success True
+    expected_valid = "valid" in t.lower()
+    ok = (expected_valid and success) or (not expected_valid and (not success))
+    results.append((t, ok, expected_valid, success))
+    print("Result:", "OK" if ok else "FAIL", "\n")
 
-    # Copiar el archivo como input.txt
-    os.system(f"cp {path} input.txt")
-
-    print(f"\n🔎 Probando: {filename}")
-
-    result = subprocess.run(["python", "main.py"], capture_output=True, text=True)
-    output = result.stdout + result.stderr
-
-    if "Error" in output or "error" in output.lower():
-        # debe ser inválido
-        if filename.startswith("invalid"):
-            invalid_passed += 1
-            print(f"✅ INVALIDO detectado correctamente")
-        else:
-            print(f"❌ ERROR: archivo válido marcado como inválido")
-        invalid_total += filename.startswith("invalid")
-        valid_total += filename.startswith("valid")
-
-    else:
-        # debe ser válido
-        if filename.startswith("valid"):
-            valid_passed += 1
-            print(f"✅ VÁLIDO compiló correctamente")
-        else:
-            print(f"❌ ERROR: archivo inválido pasó como válido")
-        valid_total += filename.startswith("valid")
-        invalid_total += filename.startswith("invalid")
-
-print("\n📊 RESULTADOS FINALES:")
-print(f"✔️ Válidos correctos: {valid_passed}/{valid_total}")
-print(f"❌ Inválidos detectados correctamente: {invalid_passed}/{invalid_total}")
-print("\n🏁 Testeo completado")
+print("==== Summary ====")
+for t, ok, expected_valid, success in results:
+    print(f"{t}: {'PASS' if ok else 'FAIL'} (expected valid={expected_valid}, got output={success})")

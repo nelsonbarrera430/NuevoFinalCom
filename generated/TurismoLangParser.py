@@ -16,12 +16,12 @@ def serializedATN():
         4,0,0,5,0,2,4,6,8,0,0,39,0,11,1,0,0,0,2,17,1,0,0,0,4,29,1,0,0,0,
         6,31,1,0,0,0,8,35,1,0,0,0,10,12,3,2,1,0,11,10,1,0,0,0,12,13,1,0,
         0,0,13,11,1,0,0,0,13,14,1,0,0,0,14,15,1,0,0,0,15,16,5,0,0,1,16,1,
-        1,0,0,0,17,18,5,1,0,0,18,19,5,8,0,0,19,21,5,2,0,0,20,22,3,4,2,0,
+        1,0,0,0,17,18,5,4,0,0,18,19,5,8,0,0,19,21,5,1,0,0,20,22,3,4,2,0,
         21,20,1,0,0,0,22,23,1,0,0,0,23,21,1,0,0,0,23,24,1,0,0,0,24,25,1,
-        0,0,0,25,26,5,3,0,0,26,3,1,0,0,0,27,30,3,6,3,0,28,30,3,8,4,0,29,
-        27,1,0,0,0,29,28,1,0,0,0,30,5,1,0,0,0,31,32,5,4,0,0,32,33,5,9,0,
-        0,33,34,5,5,0,0,34,7,1,0,0,0,35,36,5,6,0,0,36,37,5,9,0,0,37,38,5,
-        7,0,0,38,39,5,8,0,0,39,40,5,5,0,0,40,9,1,0,0,0,3,13,23,29
+        0,0,0,25,26,5,2,0,0,26,3,1,0,0,0,27,30,3,6,3,0,28,30,3,8,4,0,29,
+        27,1,0,0,0,29,28,1,0,0,0,30,5,1,0,0,0,31,32,5,5,0,0,32,33,5,9,0,
+        0,33,34,5,3,0,0,34,7,1,0,0,0,35,36,5,6,0,0,36,37,5,9,0,0,37,38,5,
+        7,0,0,38,39,5,8,0,0,39,40,5,3,0,0,40,9,1,0,0,0,3,13,23,29
     ]
 
 class TurismoLangParser ( Parser ):
@@ -34,12 +34,12 @@ class TurismoLangParser ( Parser ):
 
     sharedContextCache = PredictionContextCache()
 
-    literalNames = [ "<INVALID>", "'escena'", "'{'", "'}'", "'decir'", "';'", 
+    literalNames = [ "<INVALID>", "'{'", "'}'", "';'", "'escena'", "'decir'", 
                      "'opcion'", "'ir_a'" ]
 
     symbolicNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                      "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                      "ID", "STRING", "WS", "COMMENT" ]
+                      "ESCENA", "DECIR", "OPCION", "IR_A", "ID", "STRING", 
+                      "WS", "COMMENT" ]
 
     RULE_program = 0
     RULE_scene = 1
@@ -53,10 +53,10 @@ class TurismoLangParser ( Parser ):
     T__0=1
     T__1=2
     T__2=3
-    T__3=4
-    T__4=5
-    T__5=6
-    T__6=7
+    ESCENA=4
+    DECIR=5
+    OPCION=6
+    IR_A=7
     ID=8
     STRING=9
     WS=10
@@ -124,7 +124,7 @@ class TurismoLangParser ( Parser ):
                 self.state = 13 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not (_la==1):
+                if not (_la==4):
                     break
 
             self.state = 15
@@ -144,6 +144,9 @@ class TurismoLangParser ( Parser ):
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
+
+        def ESCENA(self):
+            return self.getToken(TurismoLangParser.ESCENA, 0)
 
         def ID(self):
             return self.getToken(TurismoLangParser.ID, 0)
@@ -183,11 +186,11 @@ class TurismoLangParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 17
-            self.match(TurismoLangParser.T__0)
+            self.match(TurismoLangParser.ESCENA)
             self.state = 18
             self.match(TurismoLangParser.ID)
             self.state = 19
-            self.match(TurismoLangParser.T__1)
+            self.match(TurismoLangParser.T__0)
             self.state = 21 
             self._errHandler.sync(self)
             _la = self._input.LA(1)
@@ -197,11 +200,11 @@ class TurismoLangParser ( Parser ):
                 self.state = 23 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not (_la==4 or _la==6):
+                if not (_la==5 or _la==6):
                     break
 
             self.state = 25
-            self.match(TurismoLangParser.T__2)
+            self.match(TurismoLangParser.T__1)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -254,7 +257,7 @@ class TurismoLangParser ( Parser ):
             self.state = 29
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [4]:
+            if token in [5]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 27
                 self.decir()
@@ -282,6 +285,9 @@ class TurismoLangParser ( Parser ):
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
+
+        def DECIR(self):
+            return self.getToken(TurismoLangParser.DECIR, 0)
 
         def STRING(self):
             return self.getToken(TurismoLangParser.STRING, 0)
@@ -313,11 +319,11 @@ class TurismoLangParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 31
-            self.match(TurismoLangParser.T__3)
+            self.match(TurismoLangParser.DECIR)
             self.state = 32
             self.match(TurismoLangParser.STRING)
             self.state = 33
-            self.match(TurismoLangParser.T__4)
+            self.match(TurismoLangParser.T__2)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -334,8 +340,14 @@ class TurismoLangParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+        def OPCION(self):
+            return self.getToken(TurismoLangParser.OPCION, 0)
+
         def STRING(self):
             return self.getToken(TurismoLangParser.STRING, 0)
+
+        def IR_A(self):
+            return self.getToken(TurismoLangParser.IR_A, 0)
 
         def ID(self):
             return self.getToken(TurismoLangParser.ID, 0)
@@ -367,15 +379,15 @@ class TurismoLangParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 35
-            self.match(TurismoLangParser.T__5)
+            self.match(TurismoLangParser.OPCION)
             self.state = 36
             self.match(TurismoLangParser.STRING)
             self.state = 37
-            self.match(TurismoLangParser.T__6)
+            self.match(TurismoLangParser.IR_A)
             self.state = 38
             self.match(TurismoLangParser.ID)
             self.state = 39
-            self.match(TurismoLangParser.T__4)
+            self.match(TurismoLangParser.T__2)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
