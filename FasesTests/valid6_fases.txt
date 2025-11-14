@@ -4,19 +4,19 @@ escena → IR_A
 inicio → COMMENT
 { → ESCENA
 decir → ID
-"Comienza el tour" → 9
+"Turismo gastronómico" → 9
 ; → OPCION
 opcion → STRING
-"Ir al cafe" → 9
+"Ir taqueria" → 9
 ir_a → WS
-cafe → COMMENT
+taqueria → COMMENT
 ; → OPCION
 } → DECIR
 escena → IR_A
-cafe → COMMENT
+taqueria → COMMENT
 { → ESCENA
 decir → ID
-"Estás en la cafetería" → 9
+"Taquería tradicional" → 9
 ; → OPCION
 opcion → STRING
 "Volver" → 9
@@ -35,24 +35,24 @@ program
     dialogue
       decir
         'decir'
-        '"Comienza el tour"'
+        '"Turismo gastronómico"'
         ';'
     dialogue
       opcion
         'opcion'
-        '"Ir al cafe"'
+        '"Ir taqueria"'
         'ir_a'
-        'cafe'
+        'taqueria'
         ';'
     '}'
   scene
     'escena'
-    'cafe'
+    'taqueria'
     '{'
     dialogue
       decir
         'decir'
-        '"Estás en la cafetería"'
+        '"Taquería tradicional"'
         ';'
     dialogue
       opcion
@@ -67,18 +67,18 @@ program
 
 === FASE SEMÁNTICA ===
 [SEM] Escena detectada: inicio
-[SEM] Diálogo en inicio: "Comienza el tour"
-[SEM] Opción en inicio: '"Ir al cafe"' -> cafe
-[SEM] Escena detectada: cafe
-[SEM] Diálogo en cafe: "Estás en la cafetería"
-[SEM] Opción en cafe: '"Volver"' -> inicio
+[SEM] Diálogo en inicio: "Turismo gastronómico"
+[SEM] Opción en inicio: '"Ir taqueria"' -> taqueria
+[SEM] Escena detectada: taqueria
+[SEM] Diálogo en taqueria: "Taquería tradicional"
+[SEM] Opción en taqueria: '"Volver"' -> inicio
 ======================
 --- TABLA DE SÍMBOLOS ---
 inicio:
-  Diálogos: [('decir', '"Comienza el tour"')]
-  Opciones: [{'text': '"Ir al cafe"', 'target': 'cafe'}]
-cafe:
-  Diálogos: [('decir', '"Estás en la cafetería"')]
+  Diálogos: [('decir', '"Turismo gastronómico"')]
+  Opciones: [{'text': '"Ir taqueria"', 'target': 'taqueria'}]
+taqueria:
+  Diálogos: [('decir', '"Taquería tradicional"')]
   Opciones: [{'text': '"Volver"', 'target': 'inicio'}]
 -------------------------
 

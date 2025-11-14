@@ -4,22 +4,22 @@ escena → IR_A
 inicio → COMMENT
 { → ESCENA
 decir → ID
-"Comienza el tour" → 9
+"Bienvenido al tour" → 9
 ; → OPCION
 opcion → STRING
-"Ir al cafe" → 9
+"Ir al museo" → 9
 ir_a → WS
-cafe → COMMENT
+museo → COMMENT
 ; → OPCION
 } → DECIR
 escena → IR_A
-cafe → COMMENT
+museo → COMMENT
 { → ESCENA
 decir → ID
-"Estás en la cafetería" → 9
+"Estás en el museo" → 9
 ; → OPCION
 opcion → STRING
-"Volver" → 9
+"Volver al inicio" → 9
 ir_a → WS
 inicio → COMMENT
 ; → OPCION
@@ -35,29 +35,29 @@ program
     dialogue
       decir
         'decir'
-        '"Comienza el tour"'
+        '"Bienvenido al tour"'
         ';'
     dialogue
       opcion
         'opcion'
-        '"Ir al cafe"'
+        '"Ir al museo"'
         'ir_a'
-        'cafe'
+        'museo'
         ';'
     '}'
   scene
     'escena'
-    'cafe'
+    'museo'
     '{'
     dialogue
       decir
         'decir'
-        '"Estás en la cafetería"'
+        '"Estás en el museo"'
         ';'
     dialogue
       opcion
         'opcion'
-        '"Volver"'
+        '"Volver al inicio"'
         'ir_a'
         'inicio'
         ';'
@@ -67,18 +67,18 @@ program
 
 === FASE SEMÁNTICA ===
 [SEM] Escena detectada: inicio
-[SEM] Diálogo en inicio: "Comienza el tour"
-[SEM] Opción en inicio: '"Ir al cafe"' -> cafe
-[SEM] Escena detectada: cafe
-[SEM] Diálogo en cafe: "Estás en la cafetería"
-[SEM] Opción en cafe: '"Volver"' -> inicio
+[SEM] Diálogo en inicio: "Bienvenido al tour"
+[SEM] Opción en inicio: '"Ir al museo"' -> museo
+[SEM] Escena detectada: museo
+[SEM] Diálogo en museo: "Estás en el museo"
+[SEM] Opción en museo: '"Volver al inicio"' -> inicio
 ======================
 --- TABLA DE SÍMBOLOS ---
 inicio:
-  Diálogos: [('decir', '"Comienza el tour"')]
-  Opciones: [{'text': '"Ir al cafe"', 'target': 'cafe'}]
-cafe:
-  Diálogos: [('decir', '"Estás en la cafetería"')]
-  Opciones: [{'text': '"Volver"', 'target': 'inicio'}]
+  Diálogos: [('decir', '"Bienvenido al tour"')]
+  Opciones: [{'text': '"Ir al museo"', 'target': 'museo'}]
+museo:
+  Diálogos: [('decir', '"Estás en el museo"')]
+  Opciones: [{'text': '"Volver al inicio"', 'target': 'inicio'}]
 -------------------------
 

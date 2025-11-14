@@ -1,0 +1,439 @@
+
+--- TOKENS ---
+escena → IR_A
+inicio → COMMENT
+{ → ESCENA
+decir → ID
+"¡Bienvenido al Tour Interactivo de la Ciudad!" → 9
+; → OPCION
+decir → ID
+"Elige dónde quieres ir primero" → 9
+; → OPCION
+opcion → STRING
+"Ir al cafe" → 9
+ir_a → WS
+cafe → COMMENT
+; → OPCION
+opcion → STRING
+"Visitar el museo" → 9
+ir_a → WS
+museo → COMMENT
+; → OPCION
+opcion → STRING
+"Ir al parque" → 9
+ir_a → WS
+parque → COMMENT
+; → OPCION
+opcion → STRING
+"Ir al teatro" → 9
+ir_a → WS
+teatro → COMMENT
+; → OPCION
+} → DECIR
+escena → IR_A
+cafe → COMMENT
+{ → ESCENA
+decir → ID
+"Estás en una acogedora cafetería del centro." → 9
+; → OPCION
+decir → ID
+"Huele delicioso a café recién molido." → 9
+; → OPCION
+opcion → STRING
+"Tomar un café y volver al inicio" → 9
+ir_a → WS
+inicio → COMMENT
+; → OPCION
+opcion → STRING
+"Ir a la biblioteca" → 9
+ir_a → WS
+biblioteca → COMMENT
+; → OPCION
+} → DECIR
+escena → IR_A
+museo → COMMENT
+{ → ESCENA
+decir → ID
+"Has llegado al museo de arte." → 9
+; → OPCION
+decir → ID
+"Hay una exposición de arte moderno." → 9
+; → OPCION
+opcion → STRING
+"Ir a la biblioteca" → 9
+ir_a → WS
+biblioteca → COMMENT
+; → OPCION
+opcion → STRING
+"Regresar al inicio" → 9
+ir_a → WS
+inicio → COMMENT
+; → OPCION
+} → DECIR
+escena → IR_A
+parque → COMMENT
+{ → ESCENA
+decir → ID
+"Estás en el parque principal de la ciudad." → 9
+; → OPCION
+decir → ID
+"Hay familias disfrutando y niños jugando." → 9
+; → OPCION
+opcion → STRING
+"Ir al zoologico" → 9
+ir_a → WS
+zoologico → COMMENT
+; → OPCION
+opcion → STRING
+"Regresar al inicio" → 9
+ir_a → WS
+inicio → COMMENT
+; → OPCION
+} → DECIR
+escena → IR_A
+teatro → COMMENT
+{ → ESCENA
+decir → ID
+"Llegaste al teatro municipal." → 9
+; → OPCION
+decir → ID
+"Están presentando una obra clásica." → 9
+; → OPCION
+opcion → STRING
+"Ir al cafe" → 9
+ir_a → WS
+cafe → COMMENT
+; → OPCION
+opcion → STRING
+"Volver al inicio" → 9
+ir_a → WS
+inicio → COMMENT
+; → OPCION
+} → DECIR
+escena → IR_A
+biblioteca → COMMENT
+{ → ESCENA
+decir → ID
+"Estás en la biblioteca pública. Por favor, guarda silencio." → 9
+; → OPCION
+decir → ID
+"Hay libros de historia, ciencia y ficción." → 9
+; → OPCION
+opcion → STRING
+"Ir al museo nuevamente" → 9
+ir_a → WS
+museo → COMMENT
+; → OPCION
+opcion → STRING
+"Volver al inicio" → 9
+ir_a → WS
+inicio → COMMENT
+; → OPCION
+} → DECIR
+escena → IR_A
+zoologico → COMMENT
+{ → ESCENA
+decir → ID
+"Bienvenido al zoológico!" → 9
+; → OPCION
+decir → ID
+"Puedes ver leones, jirafas y pingüinos." → 9
+; → OPCION
+opcion → STRING
+"Regresar al parque" → 9
+ir_a → WS
+parque → COMMENT
+; → OPCION
+opcion → STRING
+"Volver al inicio" → 9
+ir_a → WS
+inicio → COMMENT
+; → OPCION
+} → DECIR
+--------------
+
+--- ÁRBOL SINTÁCTICO ---
+program
+  scene
+    'escena'
+    'inicio'
+    '{'
+    dialogue
+      decir
+        'decir'
+        '"¡Bienvenido al Tour Interactivo de la Ciudad!"'
+        ';'
+    dialogue
+      decir
+        'decir'
+        '"Elige dónde quieres ir primero"'
+        ';'
+    dialogue
+      opcion
+        'opcion'
+        '"Ir al cafe"'
+        'ir_a'
+        'cafe'
+        ';'
+    dialogue
+      opcion
+        'opcion'
+        '"Visitar el museo"'
+        'ir_a'
+        'museo'
+        ';'
+    dialogue
+      opcion
+        'opcion'
+        '"Ir al parque"'
+        'ir_a'
+        'parque'
+        ';'
+    dialogue
+      opcion
+        'opcion'
+        '"Ir al teatro"'
+        'ir_a'
+        'teatro'
+        ';'
+    '}'
+  scene
+    'escena'
+    'cafe'
+    '{'
+    dialogue
+      decir
+        'decir'
+        '"Estás en una acogedora cafetería del centro."'
+        ';'
+    dialogue
+      decir
+        'decir'
+        '"Huele delicioso a café recién molido."'
+        ';'
+    dialogue
+      opcion
+        'opcion'
+        '"Tomar un café y volver al inicio"'
+        'ir_a'
+        'inicio'
+        ';'
+    dialogue
+      opcion
+        'opcion'
+        '"Ir a la biblioteca"'
+        'ir_a'
+        'biblioteca'
+        ';'
+    '}'
+  scene
+    'escena'
+    'museo'
+    '{'
+    dialogue
+      decir
+        'decir'
+        '"Has llegado al museo de arte."'
+        ';'
+    dialogue
+      decir
+        'decir'
+        '"Hay una exposición de arte moderno."'
+        ';'
+    dialogue
+      opcion
+        'opcion'
+        '"Ir a la biblioteca"'
+        'ir_a'
+        'biblioteca'
+        ';'
+    dialogue
+      opcion
+        'opcion'
+        '"Regresar al inicio"'
+        'ir_a'
+        'inicio'
+        ';'
+    '}'
+  scene
+    'escena'
+    'parque'
+    '{'
+    dialogue
+      decir
+        'decir'
+        '"Estás en el parque principal de la ciudad."'
+        ';'
+    dialogue
+      decir
+        'decir'
+        '"Hay familias disfrutando y niños jugando."'
+        ';'
+    dialogue
+      opcion
+        'opcion'
+        '"Ir al zoologico"'
+        'ir_a'
+        'zoologico'
+        ';'
+    dialogue
+      opcion
+        'opcion'
+        '"Regresar al inicio"'
+        'ir_a'
+        'inicio'
+        ';'
+    '}'
+  scene
+    'escena'
+    'teatro'
+    '{'
+    dialogue
+      decir
+        'decir'
+        '"Llegaste al teatro municipal."'
+        ';'
+    dialogue
+      decir
+        'decir'
+        '"Están presentando una obra clásica."'
+        ';'
+    dialogue
+      opcion
+        'opcion'
+        '"Ir al cafe"'
+        'ir_a'
+        'cafe'
+        ';'
+    dialogue
+      opcion
+        'opcion'
+        '"Volver al inicio"'
+        'ir_a'
+        'inicio'
+        ';'
+    '}'
+  scene
+    'escena'
+    'biblioteca'
+    '{'
+    dialogue
+      decir
+        'decir'
+        '"Estás en la biblioteca pública. Por favor, guarda silencio."'
+        ';'
+    dialogue
+      decir
+        'decir'
+        '"Hay libros de historia, ciencia y ficción."'
+        ';'
+    dialogue
+      opcion
+        'opcion'
+        '"Ir al museo nuevamente"'
+        'ir_a'
+        'museo'
+        ';'
+    dialogue
+      opcion
+        'opcion'
+        '"Volver al inicio"'
+        'ir_a'
+        'inicio'
+        ';'
+    '}'
+  scene
+    'escena'
+    'zoologico'
+    '{'
+    dialogue
+      decir
+        'decir'
+        '"Bienvenido al zoológico!"'
+        ';'
+    dialogue
+      decir
+        'decir'
+        '"Puedes ver leones, jirafas y pingüinos."'
+        ';'
+    dialogue
+      opcion
+        'opcion'
+        '"Regresar al parque"'
+        'ir_a'
+        'parque'
+        ';'
+    dialogue
+      opcion
+        'opcion'
+        '"Volver al inicio"'
+        'ir_a'
+        'inicio'
+        ';'
+    '}'
+  '<EOF>'
+------------------------
+
+=== FASE SEMÁNTICA ===
+[SEM] Escena detectada: inicio
+[SEM] Diálogo en inicio: "¡Bienvenido al Tour Interactivo de la Ciudad!"
+[SEM] Diálogo en inicio: "Elige dónde quieres ir primero"
+[SEM] Opción en inicio: '"Ir al cafe"' -> cafe
+[SEM] Opción en inicio: '"Visitar el museo"' -> museo
+[SEM] Opción en inicio: '"Ir al parque"' -> parque
+[SEM] Opción en inicio: '"Ir al teatro"' -> teatro
+[SEM] Escena detectada: cafe
+[SEM] Diálogo en cafe: "Estás en una acogedora cafetería del centro."
+[SEM] Diálogo en cafe: "Huele delicioso a café recién molido."
+[SEM] Opción en cafe: '"Tomar un café y volver al inicio"' -> inicio
+[SEM] Opción en cafe: '"Ir a la biblioteca"' -> biblioteca
+[SEM] Escena detectada: museo
+[SEM] Diálogo en museo: "Has llegado al museo de arte."
+[SEM] Diálogo en museo: "Hay una exposición de arte moderno."
+[SEM] Opción en museo: '"Ir a la biblioteca"' -> biblioteca
+[SEM] Opción en museo: '"Regresar al inicio"' -> inicio
+[SEM] Escena detectada: parque
+[SEM] Diálogo en parque: "Estás en el parque principal de la ciudad."
+[SEM] Diálogo en parque: "Hay familias disfrutando y niños jugando."
+[SEM] Opción en parque: '"Ir al zoologico"' -> zoologico
+[SEM] Opción en parque: '"Regresar al inicio"' -> inicio
+[SEM] Escena detectada: teatro
+[SEM] Diálogo en teatro: "Llegaste al teatro municipal."
+[SEM] Diálogo en teatro: "Están presentando una obra clásica."
+[SEM] Opción en teatro: '"Ir al cafe"' -> cafe
+[SEM] Opción en teatro: '"Volver al inicio"' -> inicio
+[SEM] Escena detectada: biblioteca
+[SEM] Diálogo en biblioteca: "Estás en la biblioteca pública. Por favor, guarda silencio."
+[SEM] Diálogo en biblioteca: "Hay libros de historia, ciencia y ficción."
+[SEM] Opción en biblioteca: '"Ir al museo nuevamente"' -> museo
+[SEM] Opción en biblioteca: '"Volver al inicio"' -> inicio
+[SEM] Escena detectada: zoologico
+[SEM] Diálogo en zoologico: "Bienvenido al zoológico!"
+[SEM] Diálogo en zoologico: "Puedes ver leones, jirafas y pingüinos."
+[SEM] Opción en zoologico: '"Regresar al parque"' -> parque
+[SEM] Opción en zoologico: '"Volver al inicio"' -> inicio
+======================
+--- TABLA DE SÍMBOLOS ---
+inicio:
+  Diálogos: [('decir', '"¡Bienvenido al Tour Interactivo de la Ciudad!"'), ('decir', '"Elige dónde quieres ir primero"')]
+  Opciones: [{'text': '"Ir al cafe"', 'target': 'cafe'}, {'text': '"Visitar el museo"', 'target': 'museo'}, {'text': '"Ir al parque"', 'target': 'parque'}, {'text': '"Ir al teatro"', 'target': 'teatro'}]
+cafe:
+  Diálogos: [('decir', '"Estás en una acogedora cafetería del centro."'), ('decir', '"Huele delicioso a café recién molido."')]
+  Opciones: [{'text': '"Tomar un café y volver al inicio"', 'target': 'inicio'}, {'text': '"Ir a la biblioteca"', 'target': 'biblioteca'}]
+museo:
+  Diálogos: [('decir', '"Has llegado al museo de arte."'), ('decir', '"Hay una exposición de arte moderno."')]
+  Opciones: [{'text': '"Ir a la biblioteca"', 'target': 'biblioteca'}, {'text': '"Regresar al inicio"', 'target': 'inicio'}]
+parque:
+  Diálogos: [('decir', '"Estás en el parque principal de la ciudad."'), ('decir', '"Hay familias disfrutando y niños jugando."')]
+  Opciones: [{'text': '"Ir al zoologico"', 'target': 'zoologico'}, {'text': '"Regresar al inicio"', 'target': 'inicio'}]
+teatro:
+  Diálogos: [('decir', '"Llegaste al teatro municipal."'), ('decir', '"Están presentando una obra clásica."')]
+  Opciones: [{'text': '"Ir al cafe"', 'target': 'cafe'}, {'text': '"Volver al inicio"', 'target': 'inicio'}]
+biblioteca:
+  Diálogos: [('decir', '"Estás en la biblioteca pública. Por favor, guarda silencio."'), ('decir', '"Hay libros de historia, ciencia y ficción."')]
+  Opciones: [{'text': '"Ir al museo nuevamente"', 'target': 'museo'}, {'text': '"Volver al inicio"', 'target': 'inicio'}]
+zoologico:
+  Diálogos: [('decir', '"Bienvenido al zoológico!"'), ('decir', '"Puedes ver leones, jirafas y pingüinos."')]
+  Opciones: [{'text': '"Regresar al parque"', 'target': 'parque'}, {'text': '"Volver al inicio"', 'target': 'inicio'}]
+-------------------------
+

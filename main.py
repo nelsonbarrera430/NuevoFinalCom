@@ -13,7 +13,7 @@ from semantic_analyzer.SemanticVisitor import SemanticVisitor
 from codegen.PythonCodeGenerator import PythonCodeGenerator
 
 
-# ----- Árbol sintáctico formateado -----
+# ----- Imprimir árbol sintáctico con indentación -----
 def pretty_tree(node, rules, indent=0):
     from antlr4.tree.Tree import TerminalNodeImpl
     sp = "  " * indent
@@ -37,36 +37,73 @@ def debug_tokens(file, log):
     log.write("--------------\n\n")
 
 
-# ----- Pipeline principal -----
+
+# ---------------------------
+#       MAIN PIPELINE
+# ---------------------------
 def main():
+
+    # archivo de entrada
     input_file = sys.argv[1] if len(sys.argv) > 1 else "input.txt"
+
     if not os.path.exists(input_file):
         print(f"❌ Archivo no encontrado: {input_file}")
         return
 
-    with open("output_fases.txt", "w", encoding="utf-8") as log:
+    print(f"📄 Ejecutando test: {input_file}")
 
-        # 1. Léxico
+    # ---------------------------
+    # Crear carpeta FasesTests si no existe
+    # ---------------------------
+    output_dir = "FasesTests"
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+        print(f"📁 Carpeta creada: {output_dir}")
+
+    # nombre automático del archivo de fases
+    base = os.path.splitext(os.path.basename(input_file))[0]
+    log_path = os.path.join(output_dir, f"{base}_fases.txt")
+
+    passed = True
+    error_msg = None
+
+    with open(log_path, "w", encoding="utf-8") as log:
+
+        # ------- 1. Fase Léxica -------
         debug_tokens(input_file, log)
 
-        # 2. Sintaxis
-        stream = CommonTokenStream(TurismoLangLexer(FileStream(input_file, encoding="utf-8")))
-        parser = TurismoLangParser(stream)
-        tree = parser.program()
+        # ------- 2. Fase Sintáctica -------
+        try:
+            stream = CommonTokenStream(TurismoLangLexer(FileStream(input_file, encoding="utf-8")))
+            parser = TurismoLangParser(stream)
+            tree = parser.program()
+        except Exception as e:
+            passed = False
+            error_msg = f"Error sintáctico: {e}"
+            log.write("❌ " + error_msg + "\n")
+
+        if not passed:
+            print(f"❌ TEST FALLÓ: {error_msg}")
+            return
+
         log.write("--- ÁRBOL SINTÁCTICO ---\n")
         log.write(pretty_tree(tree, parser.ruleNames))
         log.write("------------------------\n\n")
 
-        # 3. Semántica
-        visitor = SemanticVisitor()
+        # ------- 3. Fase Semántica -------
+        visitor = SemanticVisitor(log)
         try:
             table = visitor.visitProgram(tree)
         except Exception as e:
-            log.write(f"❌ Error semántico: {e}")
-            print(f"❌ Error semántico: {e}")
+            passed = False
+            error_msg = f"Error semántico: {e}"
+            log.write("❌ " + error_msg + "\n")
+
+        if not passed:
+            print(f"❌ TEST FALLÓ: {error_msg}")
             return
 
-        # Tabla de símbolos
+        # ------- Tabla de símbolos -------
         log.write("--- TABLA DE SÍMBOLOS ---\n")
         for name, data in table.scenes.items():
             log.write(f"{name}:\n")
@@ -74,20 +111,30 @@ def main():
             log.write(f"  Opciones: {data['options']}\n")
         log.write("-------------------------\n\n")
 
-        # Validaciones globales
+        # ------- Validaciones globales -------
         try:
             for w in table.check_all():
                 log.write(w + "\n")
         except Exception as e:
-            log.write(f"❌ Error semántico: {e}")
-            print(f"❌ Error semántico: {e}")
+            passed = False
+            error_msg = f"Error semántico: {e}"
+            log.write("❌ " + error_msg + "\n")
+
+        if not passed:
+            print(f"❌ TEST FALLÓ: {error_msg}")
             return
 
-        # 4. Generación de código
+        # ------- 4. Generación de código -------
         code = PythonCodeGenerator(table).generate()
-        open("output_program.py", "w", encoding="utf-8").write(code)
+        with open("output_program.py", "w", encoding="utf-8") as f:
+            f.write(code)
 
-    print("✅ Fases guardadas en output_fases.txt")
+    # RESULTADO FINAL
+    if passed:
+        print(f"✅ TEST PASÓ: {input_file}")
+        print(f"📦 Archivo generado en: {log_path}")
+    else:
+        print(f"❌ TEST FALLÓ: {error_msg}")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,20 @@
+
+--- TOKENS ---
+decir → ID
+"Esto no pertenece a ninguna escena" → 9
+; → OPCION
+--------------
+
+--- ÁRBOL SINTÁCTICO ---
+program
+  'decir'
+  '"Esto no pertenece a ninguna escena"'
+  ';'
+------------------------
+
+=== FASE SEMÁNTICA ===
+======================
+--- TABLA DE SÍMBOLOS ---
+-------------------------
+
+❌ Error semántico: falta escena inicial 'inicio'.

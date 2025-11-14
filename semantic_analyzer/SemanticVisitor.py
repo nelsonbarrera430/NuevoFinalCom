@@ -1,73 +1,72 @@
-# ============================================================
-#  SemanticVisitor.py
-#  Analizador semántico del lenguaje TurismoLang
-#
-#  Se encarga de:
-#    - Registrar cada escena del programa
-#    - Guardar diálogos y opciones dentro de la tabla de símbolos
-#    - Validar que las escenas y saltos existan
-#    - Detectar errores semánticos (escenas repetidas, sin inicio, etc.)
-# ============================================================
-
 from TurismoLangVisitor import TurismoLangVisitor
 from .SymbolTable import SymbolTable
 
-
 class SemanticVisitor(TurismoLangVisitor):
 
-    def __init__(self):
-        # Tabla de símbolos donde se almacenan escenas, diálogos y opciones
-        self.table = SymbolTable()
-        self.current_scene = None  # Escena que se está procesando
+    # ----------------------------------------------------------
+    # Constructor: inicializa tabla y archivo de log
+    # ----------------------------------------------------------
+    def __init__(self, log=None):
+        self.table = SymbolTable()      # Tabla de símbolos
+        self.current_scene = None       # Escena actual procesándose
+        self.log = log                  # Archivo output_fases.txt
 
-    # ------------------------------------------------------------
-    # visitProgram
-    # Recorre todas las escenas del archivo fuente
-    # ------------------------------------------------------------
-    def visitProgram(self, ctx):
-        print("=== FASE SEMÁNTICA ===")
+    # ----------------------------------------------------------
+    # Función auxiliar: escribir en el archivo de log
+    # ----------------------------------------------------------
+    def _log(self, msg):
+        if self.log:
+            self.log.write(msg + "\n")
+
+    # ----------------------------------------------------------
+    # Fase Semántica: inicio del recorrido del programa
+    # ----------------------------------------------------------
+    def visitProgram(self, ctx):--
+        self._log("=== FASE SEMÁNTICA ===")
 
         for scene in ctx.scene():
             self.visit(scene)
 
-        print("======================\n")
+        self._log("======================")
         return self.table
 
-    # ------------------------------------------------------------
-    # visitScene
-    # Procesa una escena: la registra y recorre su contenido
-    # ------------------------------------------------------------
+    # ----------------------------------------------------------
+    # Visitador de cada escena del lenguaje
+    # ----------------------------------------------------------
     def visitScene(self, ctx):
         name = ctx.ID().getText()
-        print(f"[SEM] Escena detectada: {name}")
-
         self.current_scene = name
-        self.table.add_scene(name)  # Guardar en la tabla de símbolos
 
-        # Procesar los elementos internos (decir, opcion)
+        self._log(f"[SEM] Escena detectada: {name}")
+
+        # Registrar escena en la tabla
+        self.table.add_scene(name)
+
+        # Procesar diálogos y opciones dentro de la escena
         for d in ctx.dialogue():
             self.visit(d)
 
         self.current_scene = None
 
-    # ------------------------------------------------------------
-    # visitDecir
-    # Registra un diálogo dentro de la escena actual
-    # ------------------------------------------------------------
+    # ----------------------------------------------------------
+    # Visitador de una instrucción "decir"
+    # ----------------------------------------------------------
     def visitDecir(self, ctx):
         text = ctx.STRING().getText()
-        print(f"[SEM] Diálogo en {self.current_scene}: {text}")
 
+        self._log(f"[SEM] Diálogo en {self.current_scene}: {text}")
+
+        # Guardar diálogo en la tabla
         self.table.add_dialogue(self.current_scene, ("decir", text))
 
-    # ------------------------------------------------------------
-    # visitOpcion
-    # Registra una opción y su destino
-    # ------------------------------------------------------------
+    # ----------------------------------------------------------
+    # Visitador de una instrucción "opcion"
+    # ----------------------------------------------------------
     def visitOpcion(self, ctx):
         text = ctx.STRING().getText()
         target = ctx.ID().getText()
 
-        print(f"[SEM] Opción en {self.current_scene}: '{text}' -> {target}")
+        self._log(f"[SEM] Opción en {self.current_scene}: '{text}' -> {target}")
 
+        # Registrar la opción en la tabla
         self.table.add_option(self.current_scene, text, target)
