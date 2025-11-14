@@ -1,4 +1,7 @@
 escena inicio {
-    decir "Hola";
-    opcion "Ir" ir_a museo;
+    decir "Primera escena";
+}
+
+escena inicio {
+    decir "Escena duplicada";
 }

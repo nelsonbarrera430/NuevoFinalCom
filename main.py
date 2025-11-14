@@ -8,19 +8,22 @@ from TurismoLangParser import TurismoLangParser
 from semantic_analyzer.SemanticVisitor import SemanticVisitor
 from codegen.PythonCodeGenerator import PythonCodeGenerator
 from antlr4.Token import Token
+from io import StringIO
 
-def debug_tokens(input_file):
-    print("\n================= FASE LÉXICA (TOKENS) =================")
+# ----------- Mostrar Tokens (Lexer) -----------
+def debug_tokens(input_file, log):
+    log.write("\n================= FASE LÉXICA (TOKENS) =================\n")
     input_stream = FileStream(input_file, encoding="utf-8")
     lexer = TurismoLangLexer(input_stream)
 
     token = lexer.nextToken()
     while token.type != Token.EOF:
         token_name = lexer.symbolicNames[token.type] if token.type < len(lexer.symbolicNames) else str(token.type)
-        print(f"{token.text} -> {token_name}")
+        log.write(f"{token.text} -> {token_name}\n")
         token = lexer.nextToken()
-    print("========================================================\n")
+    log.write("========================================================\n\n")
 
+# ----------- MAIN COMPILER PIPELINE -----------
 def main():
     if len(sys.argv) > 1:
         input_file = sys.argv[1]
@@ -31,54 +34,63 @@ def main():
         print(f"❌ Archivo no encontrado: {input_file}")
         return
 
-    # 1) Lexer debug
-    debug_tokens(input_file)
+    # Abrir log para fases
+    log_path = "output_fases.txt"
+    with open(log_path, "w", encoding="utf-8") as log:
 
-    # 2) Parser
-    input_stream = FileStream(input_file, encoding="utf-8")
-    lexer = TurismoLangLexer(input_stream)
-    stream = CommonTokenStream(lexer)
-    parser = TurismoLangParser(stream)
-    tree = parser.program()
+        # 1) Lexer
+        debug_tokens(input_file, log)
 
-    print("=============== FASE SINTÁCTICA (Parse Tree) ===============")
-    print(tree.toStringTree(recog=parser))
-    print("===========================================================\n")
+        # 2) Parser
+        input_stream = FileStream(input_file, encoding="utf-8")
+        lexer = TurismoLangLexer(input_stream)
+        stream = CommonTokenStream(lexer)
+        parser = TurismoLangParser(stream)
+        tree = parser.program()
 
-    # 3) Semantic visitor
-    visitor = SemanticVisitor()
-    try:
-        table = visitor.visitProgram(tree)
-    except Exception as e:
-        print(f"❌ Error semántico: {e}")
-        return
+        log.write("=============== FASE SINTÁCTICA (Parse Tree) ===============\n")
+        log.write(tree.toStringTree(recog=parser) + "\n")
+        log.write("===========================================================\n\n")
 
-    # 4) Tabla de símbolos
-    print("=============== TABLA DE SÍMBOLOS ===============")
-    for name, data in table.scenes.items():
-        print(f"\nEscena: {name}")
-        print(f"  Diálogos: {data['dialogues']}")
-        print(f"  Opciones: {data['options']}")
-    print("=================================================\n")
+        # 3) Visitor Semántico
+        visitor = SemanticVisitor()
+        try:
+            table = visitor.visitProgram(tree)
+        except Exception as e:
+            log.write(f"❌ Error semántico: {e}\n")
+            print(f"❌ Error semántico: {e}")
+            return
 
-    # 5) Validaciones semánticas
-    try:
-        warnings = table.check_all()
-        for w in warnings:
-            print(w)
-    except Exception as e:
-        print(f"❌ Error semántico: {e}")
-        return
+        # 4) Tabla de símbolos
+        log.write("=============== TABLA DE SÍMBOLOS ===============\n")
+        for name, data in table.scenes.items():
+            log.write(f"\nEscena: {name}\n")
+            log.write(f"  Diálogos: {data['dialogues']}\n")
+            log.write(f"  Opciones: {data['options']}\n")
+        log.write("=================================================\n\n")
 
-    # 6) Code generation
-    generator = PythonCodeGenerator(table)
-    code = generator.generate()
+        # Validaciones semánticas
+        try:
+            warnings = table.check_all()
+            for w in warnings:
+                log.write(w + "\n")
+        except Exception as e:
+            log.write(f"❌ Error semántico: {e}\n")
+            print(f"❌ Error semántico: {e}")
+            return
 
-    with open("output_program.py", "w", encoding="utf-8") as f:
-        f.write(code)
+        # 5) Generación de código
+        generator = PythonCodeGenerator(table)
+        code = generator.generate()
 
-    print("✅ Código generado: output_program.py")
-    print("🎮 Ejecuta tu juego con:  python output_program.py")
+        with open("output_program.py", "w", encoding="utf-8") as f:
+            f.write(code)
+
+        log.write("✅ Código generado: output_program.py\n")
+        log.write("🎮 Ejecuta tu juego con: python output_program.py\n")
+
+    print(f"✅ Proceso completo guardado en {log_path}")
+    print("🎮 Ejecuta tu juego con: python output_program.py")
 
 if __name__ == "__main__":
     main()

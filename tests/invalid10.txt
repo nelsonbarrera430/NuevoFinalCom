@@ -1,3 +1,1 @@
-escena inicio {
-    deci "Hola";
-}
+decir "Esto no pertenece a ninguna escena";

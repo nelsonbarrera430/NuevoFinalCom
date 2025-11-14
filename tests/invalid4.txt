@@ -1,8 +1,7 @@
 escena inicio {
-    decir "Hola"
-    opcion "Ir" ir_a parque;
+    decir "Primera versión de inicio";
 }
 
-escena parque {
-    decir "Parque";
+escena inicio {
+    decir "Segunda versión de inicio duplicada";
 }

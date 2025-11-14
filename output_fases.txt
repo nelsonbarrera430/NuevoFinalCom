@@ -1,0 +1,23 @@
+
+================= FASE LÉXICA (TOKENS) =================
+escena -> IR_A
+plaza -> COMMENT
+{ -> ESCENA
+decir -> ID
+"Hola" -> 9
+; -> OPCION
+} -> DECIR
+========================================================
+
+=============== FASE SINTÁCTICA (Parse Tree) ===============
+(program (scene escena plaza { (dialogue (decir decir "Hola" ;)) }) <EOF>)
+===========================================================
+
+=============== TABLA DE SÍMBOLOS ===============
+
+Escena: plaza
+  Diálogos: [('decir', '"Hola"')]
+  Opciones: []
+=================================================
+
+❌ Error semántico: falta escena inicial 'inicio'.

@@ -1,9 +1,50 @@
 escena inicio {
-    decir "Comienza el tour";
+    decir "¡Bienvenido al Tour Interactivo de la Ciudad!";
+    decir "Elige dónde quieres ir primero";
     opcion "Ir al cafe" ir_a cafe;
+    opcion "Visitar el museo" ir_a museo;
+    opcion "Ir al parque" ir_a parque;
+    opcion "Ir al teatro" ir_a teatro;
 }
 
 escena cafe {
-    decir "Estás en la cafetería";
-    opcion "Volver" ir_a inicio;
+    decir "Estás en una acogedora cafetería del centro.";
+    decir "Huele delicioso a café recién molido.";
+    opcion "Tomar un café y volver al inicio" ir_a inicio;
+    opcion "Ir a la biblioteca" ir_a biblioteca;
+}
+
+escena museo {
+    decir "Has llegado al museo de arte.";
+    decir "Hay una exposición de arte moderno.";
+    opcion "Ir a la biblioteca" ir_a biblioteca;
+    opcion "Regresar al inicio" ir_a inicio;
+}
+
+escena parque {
+    decir "Estás en el parque principal de la ciudad.";
+    decir "Hay familias disfrutando y niños jugando.";
+    opcion "Ir al zoologico" ir_a zoologico;
+    opcion "Regresar al inicio" ir_a inicio;
+}
+
+escena teatro {
+    decir "Llegaste al teatro municipal.";
+    decir "Están presentando una obra clásica.";
+    opcion "Ir al cafe" ir_a cafe;
+    opcion "Volver al inicio" ir_a inicio;
+}
+
+escena biblioteca {
+    decir "Estás en la biblioteca pública. Por favor, guarda silencio.";
+    decir "Hay libros de historia, ciencia y ficción.";
+    opcion "Ir al museo nuevamente" ir_a museo;
+    opcion "Volver al inicio" ir_a inicio;
+}
+
+escena zoologico {
+    decir "Bienvenido al zoológico!";
+    decir "Puedes ver leones, jirafas y pingüinos.";
+    opcion "Regresar al parque" ir_a parque;
+    opcion "Volver al inicio" ir_a inicio;
 }

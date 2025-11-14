@@ -1,4 +1,4 @@
-escena inicio {
-    decir "Hola";
-    opcion "Ir" ir_a;
+escena museo {
+    decir "Solo una escena sin inicio";
+    opcion "Ir al parque" ir_a parque;
 }
