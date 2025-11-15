@@ -1,4 +1,3 @@
-escena museo {
-    decir "Solo una escena sin inicio";
-    opcion "Ir al parque" ir_a parque;
+escena inicio {
+    decir "Falta el punto y coma"
 }

@@ -21,7 +21,7 @@ class SemanticVisitor(TurismoLangVisitor):
     # ----------------------------------------------------------
     # Fase Semántica: inicio del recorrido del programa
     # ----------------------------------------------------------
-    def visitProgram(self, ctx):--
+    def visitProgram(self, ctx):
         self._log("=== FASE SEMÁNTICA ===")
 
         for scene in ctx.scene():
